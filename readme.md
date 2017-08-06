@@ -1,1 +1,1 @@
-# This is a unit test lirbary for linux
+# This is a unit test library for linux
