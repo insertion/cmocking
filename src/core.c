@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <io.h>
 
 // Default signal functions that should be restored after a test is complete.
 typedef void (*SignalFunction)(int signal);
@@ -30,7 +31,7 @@ static void exit_test(void)
 
 void handle_exceptions(int signal)
 {
-    printf("%s\n", strsignal(signal));
+    log_err("%s", strsignal(signal));
     exit_test();
 }
 int __run_test(const UnitTest * const test)
@@ -48,14 +49,16 @@ int __run_test(const UnitTest * const test)
     if(!setjmp(global_run_test_env))
     {
         // 直接返回
-        printf("start test\n");
+        log_run("%s",test->name);
+        // run test case
         test->function(NULL);
-        printf("test successed\n");
+        // if return successfully
+        log_ok("%s",test->name);
     }
     else
     {
         failed = 1;
-        printf("test failed\n");
+        log_fail("%s",test->name);
     }
     teardown_testing(test->name);
     // 恢复默认异常处理

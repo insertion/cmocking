@@ -2,6 +2,10 @@
 /*
     提供一些需要暴露给其它模块的接口
 */
+
+#ifndef CORE_H
+#define CORE_H
+
 #include<signal.h>
 
 // Function prototype for setup, test and teardown functions.
@@ -38,3 +42,4 @@ static const int exception_signals[] = {
     SIGSYS,
 };
 
+#endif
