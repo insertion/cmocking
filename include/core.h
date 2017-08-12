@@ -41,5 +41,5 @@ static const int exception_signals[] = {
     SIGBUS,
     SIGSYS,
 };
-
+void exit_test(int exit_flag);
 #endif

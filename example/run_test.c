@@ -5,6 +5,7 @@ void test_case_err(void **state)
 }
 void test_case_success(void **state)
 {
+    
     int a = 5/3;
 }
 
