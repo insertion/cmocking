@@ -1,3 +1,5 @@
+#ifndef LIST_H
+#define LIST_H 
 
 typedef struct ListNode 
 {
@@ -33,3 +35,6 @@ void *list_free(ListNode *const head, CleanupListValue cleanup_value, int has_ch
 int list_first(ListNode *const head, ListNode **output);
 void list_add(ListNode *const head, ListNode *new_node);
 ListNode *list_add_value(ListNode *const head, const void *value);
+void free_value(const void *value, int has_child_list);
+
+#endif

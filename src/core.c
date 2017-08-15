@@ -1,10 +1,9 @@
 #include <setjmp.h>
-#include <core.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <io.h>
+#include <cmocking.h>
 
 
 /*
@@ -16,14 +15,19 @@ typedef void (*SignalFunction)(int signal);
 static SignalFunction default_signal_functions[ARRAY_LENGTH(exception_signals)];
 // static  修饰符有助于缓解符号冲突,所有不向外提供接口的符号都用static修饰
 // Create function results and expected parameter lists.
+extern ListNode global_function_result_map_head;
+// 在list文件中定义的全局变量
+
 static void initialize_testing(const char *test_name)
 {
-    // 测试前的环境配置
+    // 测试前的环境配置,初始化全局变量
+    list_initialize(&global_function_result_map_head);
     return;
 }
 static void teardown_testing(const char *test_name)
 {
     // 测试后的环境清理
+    list_free(&global_function_result_map_head,free_value,1);
     return;
 }
 // Keeps track of the calling context returned by setjmp
@@ -60,6 +64,7 @@ int __run_test(const UnitTest * const test)
        default_signal_functions[i] =  signal(exception_signals[i],handle_exceptions);
     }
     initialize_testing(test->name);
+    // 没个测试用例初始化一次,因为每个测试用例可能调用好几个mock函数
     // 下面相当于开一个新的线程跑测试用例
     // 新开一个函数栈跑测试用例,如果出错即异常无法从函数返回时,
     // 捕获异常,然后直接重该函数栈跳回调用处

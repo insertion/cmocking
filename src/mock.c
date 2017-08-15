@@ -11,7 +11,8 @@
  * SourceLocation as its' first member.
  */
 // 定义个全局变量,value保存的是SymbolMapValue结构类型,双层链表的第一层
-static ListNode global_function_result_map_head;
+ListNode global_function_result_map_head;
+// 这个全局变量,要初始化
 
 /* Determine whether a symbol name referenced by a symbol_map_value
  * matches the specified function name. */
@@ -27,7 +28,7 @@ int symbol_names_match(const void *map_value, const void *symbol)
 int get_symbol_node(ListNode *head, const char *const symbol, void **output)
 {
     ListNode *current;
-    for (current = head; current != NULL; current = current->next)
+    for (current = head->next; current != head; current = current->next)
     {
         if (symbol_names_match(current->value, symbol))
         {
@@ -102,4 +103,5 @@ void _will_return(const char * function_name, const LargeINT value)
 {
    
     add_symbol_value(&global_function_result_map_head, function_name, value);
+    // 在使用global__function_result_map_head的时候要初始化
 }

@@ -20,5 +20,6 @@ void log(int state,const char *fmt, ...);
 #define log_ok(...) log(SUCCESS,__VA_ARGS__)
 #define log_fail(...) log(FAILED,__VA_ARGS__)
 #define log_err(...) log(ERROR,__VA_ARGS__)
+#define log_info(...) log(ERROR,__VA_ARGS__)
 
 #endif

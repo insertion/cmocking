@@ -15,6 +15,7 @@
 int list_find(const ListNode *const head, const void *const value, ListNode **output, EqualityFunction cmp)
 {
     ListNode *current = head->next;
+    // 如果head为空,则head->next == head
     while (current != head)
     {
         if (cmp(current->value, value))
@@ -51,7 +52,7 @@ int list_empty(const ListNode *const head)
 // Used by list_free() to deallocate values referenced by list nodes.
 // 节点的value有两种,一种就是普通的value,直接free掉就好了,另一种是value里还包含一个list
 // Deallocate a value referenced by a list node.
-static void free_value(const void *value, int has_child_list)
+void free_value(const void *value, int has_child_list)
 {
     // 在本程序中节点的value类型只有两种
     assert_true(value);
